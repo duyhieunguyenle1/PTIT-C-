@@ -5,7 +5,10 @@ class sv{
     public:
         friend ostream& operator<<(ostream&, sv);
         friend istream& operator>>(istream&, sv&);
-         string getClass(){
+        string getID(){
+            return this->masv;
+        }
+        string getClass(){
             return this->lop;
         }
 };
@@ -17,20 +20,34 @@ istream& operator>>(istream& in,sv &a){
     return in;
 }
 ostream& operator<<(ostream& out,sv a){
-    return out<<a.masv<<" "<<a.name<<" "<<a.lop<<" "<<a.email<<endl;
+    out<<a.masv<<" "<<a.name<<" "<<a.lop<<" "<<a.email<<endl;
+    return out;
+}
+string nganh(string s){
+    stringstream ss(s);
+    string res="";
+    string tmp;
+    while(ss>>tmp){
+        res+=toupper(tmp[0]);
+    }
+    return res.substr(0,2);
 }
 int main(){
     int n; cin>>n;
     sv a[n];
     for(int i=0;i<n;i++)cin>>a[i];
     int q; cin>>q;
+    cin.ignore();
     while(q--){
-        string t; cin>>t;
-        cout<<"DANH SACH SINH VIEN LOP "<<t<<":\n";
-        for(sv x:a){
-            if(x.getClass()==t){
-               cout<<x;
-            }
+        string t; getline(cin,t);
+        for(int i=0;i<t.size();i++)t[i]=toupper(t[i]);
+        cout<<"DANH SACH SINH VIEN NGANH "<<t<<":\n";
+        for(int i=0;i<n;i++){
+            if(nganh(t)=="AT"||nganh(t)=="CN"){
+                if(a[i].getClass()[0]!='E'&&nganh(t)==a[i].getID().substr(5,2)){
+                    cout<<a[i];
+                }
+            }else if(nganh(t)==a[i].getID().substr(5,2))cout<<a[i];
         }
     }
     return 0;

@@ -3,3 +3,5 @@
 *.in
 *.out
 .cph
+test.cpp
+test2.cpp

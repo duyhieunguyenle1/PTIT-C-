@@ -4,31 +4,32 @@ int main(){
     int t; cin>>t;
     while(t--){
         int n1,n2,n3; cin>>n1>>n2>>n3;
-        int a[n1],b[n2],c[n3];
-        map<int,int>m1,m2,m3;
+        long long a[n1],b[n2],c[n3];
+        vector<int>v;
         for(int i=0;i<n1;i++){
             cin>>a[i];
-            m1[a[i]]++;
         }
         for(int i=0;i<n2;i++) {
             cin>>b[i];
-            m2[b[i]]++;
         }
         for(int i=0;i<n3;i++){
             cin>>c[i];
-            m3[c[i]]++;
         }
-        vector<int>v;
-        int check=0;
-        for(int i=0;i<n1;i++){
-            if(m1[a[i]]&&m2[a[i]]&&m3[a[i]]){
+        int i=0,j=0,l=0;
+        while(i<n1&&j<n2&&l<n3){
+            if(a[i]==b[j]&&b[j]==c[l]){
                 v.push_back(a[i]);
-                check=1;
+                i++; j++; l++;
             }
+            else if(a[i]<b[j]||a[i]<c[l])i++;
+            else if(b[j]<a[i]||b[j]<c[l])j++;
+            else l++;
         }
-        if(check)for(auto x:v)cout<<x<<" ";
-        else cout<<"-1";
-        cout<<endl;
+        if(v.size()==0)cout<<"-1\n";
+        else {
+            for(auto x:v)cout<<x<<" ";
+            cout<<endl;
+        }
     }
     return 0;
 }
